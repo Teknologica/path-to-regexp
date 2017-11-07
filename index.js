@@ -118,9 +118,10 @@ function tokensToFunction (tokens) {
     }
   }
 
-  return function (obj) {
+  return function (obj, options) {
     var path = ''
     var data = obj || {}
+    var encode = (options && options.encode) || encodeURIComponent
 
     for (var i = 0; i < tokens.length; i++) {
       var token = tokens[i]
@@ -168,7 +169,7 @@ function tokensToFunction (tokens) {
         continue
       }
 
-      segment = encodeURIComponent(value)
+      segment = encode(value)
 
       if (!matches[i].test(segment)) {
         throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
